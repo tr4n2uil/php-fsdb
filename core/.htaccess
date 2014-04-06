@@ -1,0 +1,13 @@
+#
+#	Domain Host Multiplexer .htaccess file (No need to modify)
+#
+#	Vibhaj Rajan <vibhaj8@gmail.com>
+#
+#	Licensed under MIT License 
+#	http://www.opensource.org/licenses/mit-license.php
+#
+
+RewriteEngine on
+
+# 	forward everything to index.php
+RewriteRule ^(.*)$ %{HTTP_HOST}/index.php [L]

@@ -1,0 +1,24 @@
+#
+#	Default project .htaccess file (No need to modify)
+#
+#	Vibhaj Rajan <vibhaj8@gmail.com>
+#
+#	Licensed under MIT License 
+#	http://www.opensource.org/licenses/mit-license.php
+#
+
+RewriteEngine on
+
+#	handle submodule frontend code
+RewriteCond %{REQUEST_URI} ^.*ui/frontend\.(css|js)/.*\.(css|js)$ [NC]
+RewriteRule ^(.*)ui/frontend\.(css|js)/(.*)\.(css|js)$ ../lib/frontend\.$2/$3\.$4 [L]
+RewriteRule ^(.*)static/(.*)$ ../lib/frontend\.static/$2 [L]
+
+#	allow css js img
+RewriteCond %{REQUEST_URI} !^.*\.(jpg|css|js|gif|png|html)$ [NC]
+
+#	allow installer
+RewriteCond %{REQUEST_URI} !^.*install.php$ [NC]
+
+# 	forward everything to index.php
+RewriteRule ^(.*)$ index.php [L]

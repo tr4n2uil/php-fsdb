@@ -1,0 +1,59 @@
+extends layout
+
+block php
+	:php
+		$path = ROOT."/core/".CONF_INI.".conf.ini";
+		$config = CONF_INI;
+		$ini = parse_ini_file($path,true);
+		if( isset( $_POST[ 'install' ]) && $_POST[ 'install' ] == 'Submit'){
+			$conf = array();
+			foreach($ini as $key => $value){
+				if(is_array($value)){
+					$sub_conf = array();
+					foreach($value as $subkey => $subvalue){
+						$sub_conf[$subkey] = $_POST[$subkey];
+					}
+					
+					$conf[$key] = $sub_conf;
+				}
+				else{
+					$conf[$key] = $_POST[$key];
+				}
+			}
+			
+			$content = "";
+			foreach ($conf as $key=>$elem) { 
+				$content .= "[".$key."]\n"; 
+				foreach ($elem as $key2=>$elem2) { 
+					$content .= $key2." = \"".$elem2."\"\n"; 
+				}
+				$content .= "\n";
+			}
+			if(isset($_POST['delete']))
+				rename(ROOT."/tpl/install.jade",ROOT."/tpl/install.jade.done");
+			$handle = fopen($path, 'w');
+			fwrite($handle, $content);
+			fclose($handle);
+			//echo $_POST['delete'];
+			echo "Settings saved Successfully";
+			exit;
+			
+		}
+			
+block content
+	form( action = "", method = 'POST' )
+		p
+			span CONFIG NAME = 
+			input( type = "text", value = '#{config}', name = 'config', disabled = 'disabled')
+		-foreach($ini as $key => $value)
+			-if(is_array($value))
+				-foreach($value as $sub_key => $sub_value)
+					p
+						span  #{sub_key} = 
+						input( type = "text", value = '#{sub_value}', name = '#{sub_key}')	
+	
+		p
+			input( type = "checkbox", name = 'delete')
+			span Delete Install file?
+		input( type = "submit", name = 'install', value = 'Submit')
+	

@@ -1,0 +1,10 @@
+<div ng-include src="headerURL"></div>
+
+<div class="" style="width: 300px; margin: 3.5em 0;">
+	<form ng-submit="API.Session.login(userobj)">
+		<input class="form-control" type="text" placeholder="Username" ng-model="userobj.username"/><br />
+		<input class="form-control" type="password" placeholder="Password" ng-model="userobj.password" /><br />
+		<input class="btn btn-success" type="submit" value="Login" />
+		<input class="btn btn-default" type="reset" value="Reset" />
+	</form>
+</div>

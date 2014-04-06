@@ -1,0 +1,38 @@
+:php
+	$app = APP;
+
+block php
+
+doctype 5
+html( ng-app="APP" )
+	head
+		meta( charset="utf-8" )
+		meta( name="viewport", content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1" )
+		meta( name="apple-mobile-web-app-capable", content="yes" )
+		meta( name="apple-mobile-web-app-status-bar-style", content="black-translucent" )
+
+		block title
+		
+		link(rel='stylesheet', href='#{app}static/css/bootstrap/bootstrap.min.css')
+		link(rel='stylesheet', href='#{app}ui/css/style.css')
+
+		script(type='text/javascript', src='#{app}static/js/jquery/jquery-1.10.2.min.js')
+		script(type='text/javascript', src='#{app}static/js/bootstrap/bootstrap.min.js')
+
+		script(type='text/javascript', src='#{app}static/js/angular/angular.js')
+		script(type='text/javascript', src='#{app}static/js/angular/angular-route.min.js')
+		script(type='text/javascript', src='#{app}static/js/angular/angular-resource.min.js')
+		script(type='text/javascript', src='#{app}static/js/angular/angular-sanitize.min.js')
+		
+		script(type='text/javascript', src='#{app}ui/frontend.js/frontend.js')
+		script(type='text/javascript', src='#{app}ui/frontend.js/angular-rest.js')
+		script(type='text/javascript', src='#{app}ui/frontend.js/angular-api.js')
+
+		script(type='text/javascript', src='#{app}ui/js/app.js')
+		script(type='text/javascript', src='#{app}ui/js/angular-fd.js')
+		script(type='text/javascript', src='#{app}ui/js/angular-init.js')
+
+	body( ng-controller="initController" )
+		block header
+		block content
+		block footer

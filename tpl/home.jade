@@ -1,0 +1,12 @@
+extends layout
+
+block title
+	title= "Backend.php in Jade"
+
+block content
+	div.body
+		div.loading( ng-show="loader" )
+			img( src="#{app}ui/img/loader.gif" )
+
+		div( ng-view )
+
