@@ -26,7 +26,7 @@
 		'/^api\/session\/?(?P<id>[\w\.]+)?$/i' => array( PR_ROOT. 'rest.php', array( 'model' => 'Session' )),
 
 		// apps api
-		'/^api\/note\/?(?P<id>[\d]+)?$/i' => array( PR_ROOT. 'rest.php', array( 'model' => 'Note' )),
+		'/^api\/data\/?(?P<id>[\w\-]+)?$/i' => array( PR_ROOT. 'rest.php', array( 'model' => 'Map' )),
 
 		// file views
 		'/^embed$/i' => array( PR_ROOT. 'embed.php' ),

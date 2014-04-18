@@ -60,16 +60,17 @@ CREATE TABLE IF NOT EXISTS `auth_users` (
 # Data exporting was unselected.
 
 
-# Dumping structure for table demo_note
+# Dumping structure for table data_map
 CREATE TABLE `demo_note` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(512) NOT NULL,
-  `desc` VARCHAR(5120) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
+  `name` VARCHAR(255) NOT NULL,
+  `value` TEXT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `name` (`name`)
 )
 COLLATE='utf8_general_ci'
 ENGINE=InnoDB
-ROW_FORMAT=DEFAULT;
+ROW_FORMAT=DEFAULT
 
 # Data exporting was unselected.
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

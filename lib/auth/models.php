@@ -301,11 +301,11 @@
 
 				// delete old cookie
 				if( !setcookie( session_name(), false, strtotime( date( "Y-m-d H:i:s" ) ) - 5000, COOKIE_PATH, COOKIE_DOMAIN, COOKIE_SECURE, COOKIE_HTTPONLY ) )
-					throw new AuthSetCookieError( 'Unable to set cookie header' );
+					throw new Exception( 'Unable to set cookie header', COOKIEERROR );
 
 				// set new cookie
 				if( !setcookie( session_name(), $this->id, strtotime( $this->expiry ), COOKIE_PATH, COOKIE_DOMAIN, COOKIE_SECURE, COOKIE_HTTPONLY ) )
-					throw new AuthSetCookieError( 'Unable to set cookie header' );
+					throw new Exception( 'Unable to set cookie header', COOKIEERROR );
 			}
 
 			// extract session data
@@ -344,7 +344,7 @@
 			$u = $SM->user_get(); 
 
 			if( !$u ){
-				throw new AuthInvalidCredentials( 'Invalid Session' );
+				throw new Exception( 'Invalid Session', INVALIDCREDENTIALS );
 			}
 			
 			return $u->obj_serialize();
@@ -357,10 +357,10 @@
 			// get user
 			$u = unique_object( 'User', array( 'username' => $data[ 'username' ] ) );
 			if( !$u )
-				throw new AuthInvalidCredentials( 'Invalid User' );
+				throw new Exception( 'Invalid User', INVALIDCREDENTIALS );
 			
 			if( !$u->check_passwd( $data[ 'password' ] ) )
-				throw new AuthInvalidCredentials( 'Invalid Credentials' );
+				throw new Exception( 'Invalid Credentials', INVALIDCREDENTIALS );
 
 			// save session with new id
 			$SM->user_set( $u );

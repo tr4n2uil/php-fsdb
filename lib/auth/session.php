@@ -130,4 +130,33 @@
 	// initialize sessions
 	session_init();
 
+	// session authorization class
+	class SessionAuth {
+		private static function check_user(){
+			global $SM;
+			$u = $SM->user_get();
+			return $u ? true : false;
+		}
+
+		public static function read_list($model){
+			return self::check_user();
+		}
+
+		public static function read_detail($model, $pkval){
+			return self::check_user();
+		}
+
+		public static function obj_create($model){
+			return self::check_user();
+		}
+
+		public static function obj_update($model, $pkval){
+			return self::check_user();
+		}
+
+		public static function obj_delete($model, $pkval){
+			return self::check_user();
+		}
+	}
+
 ?>

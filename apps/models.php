@@ -10,16 +10,17 @@
 **/
 
 	require_once( PR_ROOT. 'db.php' );
+	require_once( PR_ROOT. 'auth/session.php' );
 
-	// note model
-	class Note extends Model {
+	// map model
+	class Map extends Model {
 		var $id;
 		var $name;
-		var $desc;
+		var $value;
 
-		static $_table = 'demo_note';
-		static $_pk = 'id';
+		static $_table = 'data_map';
+		static $_pk = 'name';
+		static $_auth = 'SessionAuth';
 	}
 	
-
 ?>

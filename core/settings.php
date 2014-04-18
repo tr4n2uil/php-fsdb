@@ -25,6 +25,7 @@
 	define( 'CACHE_DIR', ROOT. 'tmp/' );
 	define( 'HOST', $ini['URL_UTILITY_SETTINGS']['HOST']);
 	define( 'APP', $_SERVER[ 'HTTP_HOST' ] == '127.0.0.1' ? $ini['URL_UTILITY_SETTINGS']['APP_LOCAL'] : $ini['URL_UTILITY_SETTINGS']['APP'] );
+	define( 'HA_ROOT', ROOT. $ini['URL_UTILITY_SETTINGS']['HA_ROOT']);
 	
 	// auth utility settings
 	define( 'COOKIE_DOMAIN', $_SERVER['HTTP_HOST'] );

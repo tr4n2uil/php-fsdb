@@ -12,7 +12,7 @@
 	require_once( HA_ROOT. "hybridauth/Hybrid/Auth.php" );
 	require_once( HA_ROOT. "hybridauth/Hybrid/Endpoint.php" ); 
 
-	require_once( BP_ROOT. "auth/session.php" );
+	require_once( PR_ROOT. "auth/session.php" );
 
 	Hybrid_Endpoint::process();
 

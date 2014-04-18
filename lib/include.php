@@ -20,6 +20,12 @@
 	if( $ext && file_exists( $root. $path .'.php' ) ){
 		include_once( $root. $path.'.php' );
 	}
+
+	// check for html file existence
+	elseif( $ext && file_exists( $root. $path .'.html' ) ){
+		include_once( $root. $path.'.html' );
+	}
+
 	// check for jade file existence
 	elseif( $ext && file_exists( $root. $path .'.jade' ) ){
 		$srcPath = PR_ROOT. '../lib/jade-php/src/';
@@ -42,14 +48,12 @@
 		}
 		
 	}
-	// check for html file existence
-	elseif( $ext && file_exists( $root. $path .'.html' ) ){
-		include_once( $root. $path.'.html' );
-	}
+
 	// check for no extensions
 	elseif( !$ext && file_exists( $root. $path ) ){
 		include_once( $root. $path );
 	}
+	
 	// raise error
 	else {
 		echo 'Include File Not Found: '. $root. $path;

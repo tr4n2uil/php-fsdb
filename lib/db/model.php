@@ -8,7 +8,31 @@
  *	http://www.opensource.org/licenses/mit-license.php
  *
 **/
+
+	// basic authorization class
+	class Auth {
+		public static function read_list($model){
+			return true;
+		}
+
+		public static function read_detail($model, $pkval){
+			return true;
+		}
+
+		public static function obj_create($model){
+			return true;
+		}
+
+		public static function obj_update($model, $pkval){
+			return true;
+		}
+
+		public static function obj_delete($model, $pkval){
+			return true;
+		}
+	}
 	
+
 	// model definition
 	abstract class Model {
 		// objects manager
@@ -25,6 +49,9 @@
 		private $_loaded = array();
 		private $_changed = array();
 		private $_extra = array();
+
+		// authorization class
+		public static $_auth = "Auth";
 
 		// constructor
 		public function __construct( $array = array() ){
@@ -165,26 +192,42 @@
 		public static function obj_query(){
 			$data = array();
 			$cls = get_called_class();
-			foreach( $cls::objects() as $obj ){
-				$data[] = $obj->obj_serialize();
+
+			$auth = $cls::$_auth;
+			if( $auth::read_list($cls) ){
+				foreach( $cls::objects() as $obj ){
+					$data[] = $obj->obj_serialize();
+				}
 			}
+
 			return array( 'objects' => $data );
 		}
 
 		// rest objects list
 		public static function obj_get( $pkval ){
 			$cls = get_called_class();
-			$pk = $cls::$_pk;
 
-			$obj = $cls::objects()->get( array( $pk => $pkval ) );
-			return $obj->obj_serialize();
+			$auth = $cls::$_auth;
+			if( $auth::read_detail($cls, $pkval) ){
+				$pk = $cls::$_pk;
+				$obj = $cls::objects()->get( array( $pk => $pkval ) );
+				return $obj->obj_serialize();
+			}
+			
+			return None;
 		}
 
 		// rest object create
 		public static function obj_create( $data ){
 			$cls = get_called_class();
-			$obj = $cls::objects()->create( $data );
-			return $obj->obj_serialize();
+
+			$auth = $cls::$_auth;
+			if( $auth::obj_create($cls) ){
+				$obj = $cls::objects()->create( $data );
+				return $obj->obj_serialize();
+			}
+
+			return None;
 		}
 
 		// rest object update
@@ -192,13 +235,18 @@
 			$cls = get_called_class();
 			$pk = $cls::$_pk;
 
-			$obj = $cls::objects()->get( array( $pk => $pkval ) );
+			$auth = $cls::$_auth;
+			if( $auth::obj_update($cls, $pkval) ){
+				$obj = $cls::objects()->get( array( $pk => $pkval ) );
 
-			foreach( $data as $k => $v )
-				$obj->set( $k, $v );
+				foreach( $data as $k => $v )
+					$obj->set( $k, $v );
 
-			$obj->save();
-			return $obj->obj_serialize();
+				$obj->save();
+				return $obj->obj_serialize();
+			}
+
+			return None;
 		}
 
 		// rest object delete
@@ -206,10 +254,15 @@
 			$cls = get_called_class();
 			$pk = $cls::$_pk;
 
-			$obj = $cls::objects()->get( array( $pk => $pkval ) );
+			$auth = $cls::$_auth;
+			if( $auth::obj_delete($cls, $pkval) ){
+				$obj = $cls::objects()->get( array( $pk => $pkval ) );
 
-			$obj->delete();
-			return false; //$obj->obj_serialize();
+				$obj->delete();
+				return false; //$obj->obj_serialize();
+			}
+
+			return None;
 		}
 	}
 
