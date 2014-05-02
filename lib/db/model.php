@@ -177,6 +177,10 @@
 			$joins[ $join ] = "T$i";
 		}
 
+		public function obj_process($data){
+			return $data;
+		}
+
 		// rest objects serialize
 		public function obj_serialize(){
 			$data = array();
@@ -185,7 +189,7 @@
 				if( $k[ 0 ] != '_' && !in_array( $k, $cls::$_excludes ) )
 					$data[ $k ] = $v;
 
-			return $data;
+			return $this->obj_process($data);
 		}
 
 		// rest objects list
@@ -214,7 +218,7 @@
 				return $obj->obj_serialize();
 			}
 			
-			return None;
+			return false;
 		}
 
 		// rest object create
@@ -227,7 +231,7 @@
 				return $obj->obj_serialize();
 			}
 
-			return None;
+			return false;
 		}
 
 		// rest object update
@@ -246,7 +250,7 @@
 				return $obj->obj_serialize();
 			}
 
-			return None;
+			return false;
 		}
 
 		// rest object delete
@@ -262,7 +266,7 @@
 				return false; //$obj->obj_serialize();
 			}
 
-			return None;
+			return false;
 		}
 	}
 

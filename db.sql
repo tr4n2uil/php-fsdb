@@ -22,6 +22,8 @@ CREATE TABLE IF NOT EXISTS `auth_sessions` (
 # Dumping structure for table auth_users
 CREATE TABLE IF NOT EXISTS `auth_users` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(40) NOT NULL,
+  `type` int(11) NOT NULL DEFAULT '0',
   `username` varchar(255) NOT NULL,
   `repeat` int(11) NOT NULL DEFAULT '1',
   `passwd` varchar(255) DEFAULT NULL,
@@ -49,6 +51,7 @@ CREATE TABLE IF NOT EXISTS `auth_users` (
   `stg_used` int(11) NOT NULL DEFAULT '0',
   `stg_max` int(11) NOT NULL DEFAULT '157286400',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `uuid` (`uuid`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `google` (`google`),

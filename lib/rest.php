@@ -19,6 +19,10 @@
 	$id = isset( $URL_ARGS[ 'id' ] ) ? $URL_ARGS[ 'id' ] : false;
 	
 	$data = array();
+	if($content_type){
+		$content_type = explode( ';', $content_type );
+		$content_type = $content_type[0];
+	}
 	switch( $content_type ){
 		case 'application/json':
 			$input = file_get_contents( 'php://input' );
@@ -62,6 +66,7 @@
 	catch( Exception $e ){
 		header(':', true, 500);
 		echo $e->getMessage();
+		var_dump($e);
 		exit();
 	}
 

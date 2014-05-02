@@ -16,6 +16,8 @@
 	// user model
 	class User extends Model {
 		var $id;
+		var $uuid;
+		var $type;
 		var $username;
 		var $passwd;
 		var $email;
@@ -82,10 +84,10 @@
 		public static function social_login( $provider, $next ){
 			global $SM;
 
-			$config = ROOT . 'core/hybridauth_config.php';
+			$config = ROOT . 'core/hybridauth.php';
 			require_once( HA_ROOT. "hybridauth/Hybrid/Auth.php" );
 
-			try{
+			try {
 				// create an instance for Hybridauth with the configuration file path as parameter
 				$hybridauth = new Hybrid_Auth( $config );
 
@@ -114,16 +116,17 @@
 
 					// create new user object
 					if( !$u ){
+						$uuid = random_uuid();
 						// generate username
 						if( $email ){
 							$username = explode( '@', $email );
 							list( $username, $repeat ) = unique_alias( 'User', $username[ 0 ], array(), 'username' );
-							$u = self::objects()->create( array( 'email' => $email, 'username' => $username, 'repeat' => $repeat, $provider => $identifier ) );	
+							$u = self::objects()->create( array( 'email' => $email, 'username' => $username, 'repeat' => $repeat, $provider => $identifier, 'uuid' => $uuid ) );	
 						}
 						else {
 							$username = explode( '@', $identifier );
 							list( $username, $repeat ) = unique_alias( 'User', $username[ 0 ], array(), 'username' );
-							$u = self::objects()->create( array( $provider => $identifier, 'username' => $username, 'repeat' => $repeat ) );
+							$u = self::objects()->create( array( $provider => $identifier, 'username' => $username, 'repeat' => $repeat, 'uuid' => $uuid ) );
 						}
 						
 						// force sync

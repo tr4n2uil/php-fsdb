@@ -89,6 +89,8 @@
 	function session_init(){
 		global $SM;
 
+		session_set_cookie_params( COOKIE_EXPIRY * 86400, COOKIE_PATH, COOKIE_DOMAIN, COOKIE_SECURE, COOKIE_HTTPONLY );
+
 		if( !$SM ){
 			$sm = new SessionManager();
 
