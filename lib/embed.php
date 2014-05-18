@@ -11,7 +11,7 @@
 
 	// extract path from url parameters
 	if( $_FILES[ 'file' ] ){
-		require_once( PR_ROOT. 'fs/file.php' );
+		require_once( PR_ROOT. 'file.php' );
 
 		$f = save_file( MEDIA_ROOT );
 		$url = str_replace( '\\', '/', substr( $f->path, strlen( ROOT ) ) );
