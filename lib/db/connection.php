@@ -9,13 +9,15 @@
  *
 **/
 
+	require_once('exception.php');
+
 	// initialize and get connection by db key
 	function db_get_connection( $key = 'default' ){
 		global $DATABASES;
 
 		// check for key
 		if( !isset( $DATABASES[ $key ] ) )
-			throw new DBImproperlyConfigured( 'Configuration Not Found For DB: '. $key );
+			throw new Exception( 'Configuration Not Found For DB: '. $key, IMPROPERLYCONFIGURED );
 
 		$db = $DATABASES[ $key ];
 
@@ -27,7 +29,7 @@
 				$db[ 'conn' ] = $conn;
 			}
 			catch( PDOException $e ) {
-				throw new DBConnectionFailed( 'Connection failed: ' . $e->getMessage() );
+				throw new Exception( 'Connection failed: ' . $e->getMessage(), CONNECTIONFAILURE );
 			}
 		}
 
@@ -41,7 +43,7 @@
 
 		// check for key
 		if( !isset( $DATABASES[ $key ] ) )
-			throw new DBImproperlyConfigured( 'Configuration Not Found For DB: '. $key );
+			throw new Exception( 'Configuration Not Found For DB: '. $key, IMPROPERLYCONFIGURED );
 
 		$db = $DATABASES[ $key ];
 

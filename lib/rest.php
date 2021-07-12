@@ -65,7 +65,7 @@
 	}
 	catch( Exception $e ){
 		header(':', true, 500);
-		echo $e->getMessage();
+		echo $e->getMessage()."<br /><br />";
 		var_dump($e);
 		exit();
 	}
